@@ -1,0 +1,213 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanzania Salary Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <header class="app-header">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01"/><path d="M17 12h.01"/><path d="M7 12h.01"/></svg>
+                <span>Salary Calculator</span>
+            </div>
+            <div class="badge">Tanzania 2024</div>
+        </header>
+
+        <main class="calculator-layout">
+            <section class="input-section glass-card">
+                <h2 class="section-title">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    Salary Details
+                </h2>
+
+                <form id="calculator-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="salary_type">Salary Type</label>
+                            <select id="salary_type" name="salary_type">
+                                <option value="gross">Gross (Before Deductions)</option>
+                                <option value="net">Net (Take Home)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Basic Salary (TZS)</label>
+                            <div class="input-with-icon">
+                                <div class="icon">TZS</div>
+                                <input type="number" id="amount" name="amount" placeholder="e.g. 1,500,000" required min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row single">
+                        <div class="form-group">
+                            <label for="allowances">Total Allowances (TZS)</label>
+                            <div class="input-with-icon">
+                                <div class="icon">TZS</div>
+                                <input type="number" id="allowances" name="allowances" placeholder="e.g. 200,000" min="0" value="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title mt-4">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                        Deductions
+                    </h2>
+
+                    <div class="deductions-grid">
+                        <label class="toggle-card">
+                            <div class="toggle-info">
+                                <span class="toggle-name">NSSF <small>(10%)</small></span>
+                            </div>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="nssf" name="nssf" class="toggle-input" checked>
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </label>
+
+                        <label class="toggle-card">
+                            <div class="toggle-info">
+                                <span class="toggle-name">PSSF <small>(5%)</small></span>
+                            </div>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="pssf" name="pssf" class="toggle-input">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </label>
+
+                        <label class="toggle-card active-card">
+                            <div class="toggle-info">
+                                <span class="toggle-name">PAYE <small>(Income Tax)</small></span>
+                            </div>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="paye" name="paye" class="toggle-input" checked>
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </label>
+
+                        <label class="toggle-card">
+                            <div class="toggle-info">
+                                <span class="toggle-name">HESLB <small>(15%)</small></span>
+                            </div>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="heslb" name="heslb" class="toggle-input">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </label>
+
+                        <label class="toggle-card">
+                            <div class="toggle-info">
+                                <span class="toggle-name">NHIF <small>(3%)</small></span>
+                            </div>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="nhif" name="nhif" class="toggle-input">
+                                <div class="toggle-slider"></div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="info-alert">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                        You can only select NSSF or PSSF - not both. The system will handle this automatically.
+                    </div>
+
+                    <h3 class="section-title mt-4" style="font-size: 0.9rem;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        Custom Deductions
+                    </h3>
+                    
+                    <div id="custom-deductions-container">
+                        <!-- Dynamic custom deductions will appear here -->
+                    </div>
+                    <button type="button" id="add-deduction-btn" class="btn-secondary" style="margin-bottom: 2rem;">
+                        + Add Custom Deduction (e.g. MAAFA, WCF)
+                    </button>
+
+                    <button type="submit" class="btn-calculate" id="submit-btn">
+                        <span>Calculate Salary</span>
+                        <div class="loader hidden"></div>
+                    </button>
+                </form>
+            </section>
+
+            <section class="result-section glass-card hidden" id="result-section">
+                <div class="result-header">
+                    <h3>Salary Breakdown</h3>
+                    <div class="net-pay-display">
+                        <span class="label">Net Take Home Pay</span>
+                        <span class="amount" id="res-net-pay">0 TZS</span>
+                    </div>
+                </div>
+
+                <div class="breakdown-list">
+                    <div class="breakdown-group earnings">
+                        <h4>Earnings</h4>
+                        <div class="breakdown-item">
+                            <span>Basic Salary</span>
+                            <span id="res-basic">0 TZS</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>Allowances</span>
+                            <span id="res-allowances">0 TZS</span>
+                        </div>
+                        <div class="breakdown-item highlight">
+                            <strong>Gross Earnings</strong>
+                            <strong id="res-gross">0 TZS</strong>
+                        </div>
+                        <div class="breakdown-item sub">
+                            <span>Taxable Income</span>
+                            <span id="res-taxable">0 TZS</span>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-group deductions">
+                        <h4>Deductions</h4>
+                        <div class="breakdown-item" id="row-nssf">
+                            <span>NSSF (10%)</span>
+                            <span id="res-nssf">0 TZS</span>
+                        </div>
+                        <div class="breakdown-item" id="row-pssf">
+                            <span>PSSF (5%)</span>
+                            <span id="res-pssf">0 TZS</span>
+                        </div>
+                        <div class="breakdown-item" id="row-paye">
+                            <span>PAYE (Tax)</span>
+                            <span id="res-paye">0 TZS</span>
+                        </div>
+                        <div class="breakdown-item" id="row-heslb">
+                            <span>HESLB (15%)</span>
+                            <span id="res-heslb">0 TZS</span>
+                        </div>
+                        <div class="breakdown-item" id="row-nhif">
+                            <span>NHIF (3%)</span>
+                            <span id="res-nhif">0 TZS</span>
+                        </div>
+                        <div id="res-custom-deductions">
+                            <!-- Custom deductions will be rendered here -->
+                        </div>
+                        <div class="breakdown-item highlight error">
+                            <strong>Total Deductions</strong>
+                            <strong id="res-total-deductions">0 TZS</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- CSRF Token -->
+    <script>
+        const csrfToken = '{{ csrf_token }}';
+    </script>
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
